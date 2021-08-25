@@ -3,7 +3,7 @@
 // Memorize
 //
 //  Created by Zakee T on 8/20/21.
-//
+// M--V--VM  View
 
 import SwiftUI
 
@@ -11,7 +11,7 @@ struct ContentView: View {
     var emojis = [ "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",
                    "🇦🇷", "🇦🇲","🏴‍☠️", "🏁", "🚩",
                    "🇦🇫","🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸",]
-    @State var emojiCount = 4
+    @State var emojiCount = 10
    
     var body: some View {
        //creating identifier for each emoji usind id: \.self
@@ -26,38 +26,10 @@ struct ContentView: View {
             }
             
             .foregroundColor(.red)
-            Spacer()
-            HStack {
-                 add
-                 Spacer()
-                 remove
-            }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
         .padding(.horizontal)
         
     }
-   //Adding /Removing cards
-    var add: some View {
-        Button(action: {
-            if emojiCount < emojis.count {
-            emojiCount += 1
-            }
-        }, label: {
-            Image(systemName: "plus.circle").font(.largeTitle)
-        })
-    }
-    var remove: some View {
-        
-    Button(action: {
-        if emojiCount > 1 {
-        emojiCount -= 1
-        }
-    }, label: {
-        Image(systemName: "minus.circle").font(.largeTitle)
-    })
-  }
 }
 //View of cards faceup/Down
 struct cardView: View {
@@ -101,3 +73,5 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+//"♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️"
+//"🚗", "🚕", "🚙", "🚌", "🚎", "🚓", "🚑", "🚒"

@@ -3,11 +3,25 @@
 //  Memorize
 //
 //  Created by Zakee T on 8/25/21.
-//MV --->VM<---
+//MV --->VM<---ViewModel
 
 import SwiftUI
 
 class EmojiMemoryGame {
+   static let emojis = [ "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",
+                   "🇦🇷", "🇦🇲","🏴‍☠️", "🏁", "🚩",
+                   "🇦🇫","🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸",]
     
+    static func createMemoryGame() -> MemoryGame<String> {
+        MemoryGame<String>(numberOfPairsofCards: 6) { pairIndex in
+            emojis[pairIndex]
+            
+        }
+    }
     
+    private var model: MemoryGame<String> = createMemoryGame()
+    
+    var cards: Array<MemoryGame<String>.Card> {
+        return model.cards
+    }
 }
