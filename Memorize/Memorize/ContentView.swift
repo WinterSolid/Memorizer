@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["🚗", "🚕", "🚙", "🚌", "🚎", "🚓", "🚑", "🚒"]
+    var emojis = [ "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",
+                   "🇦🇷", "🇦🇲","🏴‍☠️", "🏁", "🚩",
+                   "🇦🇫","🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸",]
     @State var emojiCount = 4
    
     var body: some View {
        //creating identifier for each emoji usind id: \.self
         VStack {
-            HStack {
-                ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
-                    cardView(content: emoji)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65 ))]){
+                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                        cardView(content: emoji)
+                            .aspectRatio(2/3, contentMode: .fit)
+                    }
                 }
             }
+            
+            .foregroundColor(.red)
             Spacer()
             HStack {
                  add
@@ -29,7 +36,6 @@ struct ContentView: View {
             .padding(.horizontal)
         }
         .padding(.horizontal)
-        .foregroundColor(.red)
         
     }
    //Adding /Removing cards
@@ -62,7 +68,7 @@ struct cardView: View {
         ZStack {
             if isFaceUp {
                 shape.fill().foregroundColor(.white)
-                shape.stroke(lineWidth: 3)
+                shape.strokeBorder(lineWidth: 3)
                 Text (content).font(.largeTitle)
             } else {
                 shape.fill()
