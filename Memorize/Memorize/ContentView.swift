@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = [ "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",
-                   "🇦🇷", "🇦🇲","🏴‍☠️", "🏁", "🚩",
-                   "🇦🇫","🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸",]
-    @State var emojiCount = 10
-   
+    let viewModel: EmojiMemoryGame
+    
     var body: some View {
        //creating identifier for each emoji usind id: \.self
         VStack {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65 ))]){
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
-                        cardView(content: emoji)
+                    ForEach(viewModel.cards) { card in
+                        cardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
                 }
@@ -33,21 +30,18 @@ struct ContentView: View {
 }
 //View of cards faceup/Down
 struct cardView: View {
-    @State var isFaceUp: Bool = true
-    var content: String
-    let shape = RoundedRectangle(cornerRadius: 20.0)
+    let card: MemoryGame<String>.Card
+    
     var body: some View {
         ZStack {
-            if isFaceUp {
+            let shape = RoundedRectangle(cornerRadius: 20.0)
+            if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 3)
-                Text (content).font(.largeTitle)
+                Text (card.content).font(.largeTitle)
             } else {
                 shape.fill()
             }
-        }
-        .onTapGesture {
-          isFaceUp = !isFaceUp
         }
     }
 }
@@ -64,9 +58,10 @@ struct cardView: View {
 //only preview not codebase
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game)
             .preferredColorScheme(.dark)
-        ContentView()
+        ContentView(viewModel: game)
             .preferredColorScheme(.light)
         
        
