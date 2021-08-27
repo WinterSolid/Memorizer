@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    //@ObservedObject - something changed, rebuild body
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-       //creating identifier for each emoji usind id: \.self
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65 ))]){
                     ForEach(viewModel.cards) { card in

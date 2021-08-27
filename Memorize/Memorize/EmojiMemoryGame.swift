@@ -6,7 +6,7 @@
 //MV --->VM<---ViewModel
 
 import SwiftUI
-
+//observableObject emits before the object has changed.
 class EmojiMemoryGame: ObservableObject {
    static let emojis = [ "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",
                    "🇦🇷", "🇦🇲","🏴‍☠️", "🏁", "🚩",
@@ -18,14 +18,14 @@ class EmojiMemoryGame: ObservableObject {
             
         }
     }
-    //@published will at as objectWillChange.send()
+    //@published will act in place of objectWillChange.send() - make reactive
    @Published private var model: MemoryGame<String> = createMemoryGame()
     
     var cards: Array<MemoryGame<String>.Card> {
         model.cards
     }
     // MARK: - Intent(s)
-    
+    //@published will act in place of objectWillChange.send() in func choose
     func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card)
     }
