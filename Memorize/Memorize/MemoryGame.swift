@@ -8,22 +8,37 @@
 import Foundation
 //CardContent represents open to various
 //private(set) = can see, not change
-struct MemoryGame<CardContent> {
-   private(set) var cards: Array<Card>
+struct MemoryGame<CardContent> where CardContent: Equatable {
+    private(set) var cards: Array<Card>
+    
+    private var IndexOfOnlyOneFaceUpCard: Int?
+    
+    
+    
+    
     //calling mutationg will changs the func
     mutating func choose(_ card: Card) {
-        let chosenIndex = index(of: card)
-        cards[chosenIndex!].isFaceUp.toggle()
-        print("Cardtest\(cards)")
-    }
-    func index(of card: Card) -> Int? {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) , !cards[chosenIndex].isFaceUp,
+            !cards[chosenIndex].isMatched
+        {
+            if let possibleMatchIndex = IndexOfOnlyOneFaceUpCard {
+                if cards[chosenIndex].content == cards[possibleMatchIndex].content {
+                    cards[chosenIndex].isMatched = true
+                    cards[possibleMatchIndex].isMatched = true
+                
+                }
+                IndexOfOnlyOneFaceUpCard = nil
+            } else {
+                for index in cards.indices { //indices in place of "0..<cards.count"
+                    cards[index].isFaceUp = false
+                }
+                IndexOfOnlyOneFaceUpCard = chosenIndex
             }
+            cards[chosenIndex].isFaceUp.toggle()
         }
-        return nil
-}
+        print("Cardtest\(cards)")
+        
+    }
         
     
     init(numberOfPairsofCards: Int, createCardContent: (Int) -> CardContent){
@@ -38,7 +53,7 @@ struct MemoryGame<CardContent> {
     }
     struct Card: Identifiable {
         
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
         var id: Int
